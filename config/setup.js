@@ -71,6 +71,6 @@ module.exports = function (app, config) {
         server.close();
 
         console.log("Bye!");
-        process.exit(0)
+        process.exit(0);
     })
 }
