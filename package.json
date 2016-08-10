@@ -1,0 +1,30 @@
+{
+  "name": "middrides-server",
+  "version": "0.0.2",
+  "description": "Node server for Middrides shuttle service",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Midd-Rides/MiddRides-Server.git"
+  },
+  "keywords": [
+    "Middrides"
+  ],
+  "author": "Tao Peter Wang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Midd-Rides/MiddRides-Server/issues"
+  },
+  "homepage": "https://github.com/Midd-Rides/MiddRides-Server#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "glob": "^7.0.5",
+    "mongodb": "^2.2.5",
+    "morgan": "^1.7.0",
+    "serve-favicon": "^2.3.0"
+  }
+}
