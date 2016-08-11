@@ -44,6 +44,8 @@ module.exports = function(app, db) {
         });
     });
 
+    app.use(bodyParser.urlencoded({ extended: true }));
+    
     /**
      * Shuts down server
      * 
@@ -54,8 +56,8 @@ module.exports = function(app, db) {
      *      status
      * }
      */
-    app.get(CONSTANTS.ROUTES.SHUTDOWN, function(req, res, next) {
-        if (req.query.password !== SECRETS.password) {
+    app.post(CONSTANTS.ROUTES.SHUTDOWN, function(req, res, next) {
+        if (req.body.password !== SECRETS.password) {
             res.status(401).json({
                 error: "Password incorrect"
             });
@@ -86,8 +88,8 @@ module.exports = function(app, db) {
      *      status
      * }
      */
-    app.get(CONSTANTS.ROUTES.TURNON, function(req, res, next) {
-        if (req.query.password !== SECRETS.password) {
+    app.post(CONSTANTS.ROUTES.TURNON, function(req, res, next) {
+        if (req.body.password !== SECRETS.password) {
             res.status(401).json({
                 error: "Password incorrect"
             });
