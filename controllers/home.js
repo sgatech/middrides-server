@@ -58,16 +58,16 @@ module.exports = function(app, db) {
      */
     app.post(CONSTANTS.ROUTES.SHUTDOWN, function(req, res, next) {
         if (req.body.password !== SECRETS.password) {
-            res.status(401).json({
-                error: "Password incorrect"
-            });
+            res.status(401).json({ error: "Password incorrect" });
             return;
         }
 
         db.collection(CONSTANTS.COLLECTION.STATUS).updateOne({
-            name: "status",
+            name: "status"
         }, {
             $set: { running: false }
+        }, {
+            upsert: true
         }, function(err, result) {
             if (err) { manager.handleError(err, res); return; };
             
@@ -90,16 +90,16 @@ module.exports = function(app, db) {
      */
     app.post(CONSTANTS.ROUTES.TURNON, function(req, res, next) {
         if (req.body.password !== SECRETS.password) {
-            res.status(401).json({
-                error: "Password incorrect"
-            });
+            res.status(401).json({ error: "Password incorrect" });
             return;
         }
 
         db.collection(CONSTANTS.COLLECTION.STATUS).updateOne({
-            name: "status",
+            name: "status"
         }, {
             $set: { running: true }
+        }, {
+            upsert: true
         }, function(err, result) {
             if (err) { manager.handleError(err, res); return; };
             

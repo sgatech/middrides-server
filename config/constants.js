@@ -4,12 +4,15 @@ const ROUTES = {
     TURNON: "/turnon",
     LOGIN: "/login",
     REGISTER: "/register",
-    CHANGE_PASSWORD: "/changepwd"
+    CHANGE_PASSWORD: "/changepwd",
+    SYNC_LOCATIONS: "/location",        // user pull
+    UPDATE_LOCATIONS: "/update"         // pubsafe push
 };
 
 const COLLECTION = {
     STATUS: "status",
-    USER: "user"
+    USER: "user",
+    STOP: "stop"
 };
 
 const CONSTANTS = {
