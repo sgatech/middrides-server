@@ -34,8 +34,7 @@ module.exports = function (app, config) {
             }));
             
             // external module for handling favourite icon
-            // TODO: find an icon
-            // app.use(favicon(__dirname + "/../public/favicon.ico"));
+            app.use(favicon(__dirname + "/../public/img/favicon.ico"));
 
 
             // middlewares for handling uncaught errors 
