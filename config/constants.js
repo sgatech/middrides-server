@@ -3,7 +3,8 @@ const ROUTES = {
     SHUTDOWN: "/shutdown",
     TURNON: "/turnon",
     LOGIN: "/login",
-    REGISTER: "/register"
+    REGISTER: "/register",
+    CHANGE_PASSWORD: "/changepwd"
 };
 
 const COLLECTION = {

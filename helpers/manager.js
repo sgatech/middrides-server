@@ -31,8 +31,8 @@ function findUser(db, email, callback) {
             return;
         }
         
-        callback(null, getUserFromBson(doc));
-    })
+        callback(null, getUserFromBsonWithPassword(doc));
+    });
 }
 
 /**
@@ -61,6 +61,17 @@ function getUserFromBson(doc) {
     var user = {};
     user['email'] = doc.email;
     user['verified'] = doc.verified;
+    return user;
+}
+
+/**
+ * Turns bson user into json with password field
+ */
+function getUserFromBsonWithPassword(doc) {
+    var user = {};
+    user['email'] = doc.email;
+    user['verified'] = doc.verified;
+    user['password'] = doc.password;
     return user;
 }
 

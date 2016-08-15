@@ -27,9 +27,7 @@ module.exports = function(app, db) {
                 // user not found
                 if (!user) {
                     console.log("User not found");
-                    res.status(404).json({
-                        error: "User not found"
-                    });
+                    res.status(404).json({ error: "User not found" });
                 }
                 // password incorrect
                 else if (user.password !== password) {
@@ -68,17 +66,13 @@ module.exports = function(app, db) {
                 // user exists
                 if (user) {
                     console.log("User exists");
-                    res.status(403).json({
-                        error: "User already exists"
-                    });
+                    res.status(403).json({ error: "User already exists" });
                 } else {
                     manager.createUser(db, email, password, function(err, user) {
                         if (err) manager.handleError(err, res);
                         else {
                             if (!user) {
-                                res.status(500).json({
-                                    error: "Unknown error"
-                                });
+                                res.status(500).json({ error: "Unknown error" });
                             } else {
                                 res.status(200).json({
                                     error: "",
@@ -91,5 +85,35 @@ module.exports = function(app, db) {
             }
         });
     });
+
+    app.post(CONSTANTS.ROUTES.CHANGE_PASSWORD, function(req, res, next) {
+        let email = req.body.email;
+        let oldPassword = req.body.oldPassword;
+        let newPassword = req.body.newPassword;
+
+        manager.findUser(db, email, function(err, user) {
+            // internal error
+            if (err) manager.handleError(err, res);
+            else {
+                // user doesn't exist
+                if (!user) {
+                    console.log("User not found");
+                    res.status(404).json({ error: "User not found" });
+                } else if (user.password !== oldPassword) {
+                    console.log("Wrong old password");
+                    res.status(401).json({ error: "Password incorrect" });
+                } else {
+                    db.collection(CONSTANTS.COLLECTION.USER).updateOne({
+                        email: email
+                    }, {
+                        $set: { password: newPassword }
+                    }, function(err, result) {
+                        if (err) manager.handleError(err, res);
+                        else res.status(200).json({ error: "" });
+                    });
+                }
+            }
+        })
+    })
 
 }
