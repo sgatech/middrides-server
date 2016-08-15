@@ -17,13 +17,13 @@ module.exports = function(app, db) {
      * }
      */
     app.get(CONSTANTS.ROUTES.INDEX, function(req, res, next) {
-        db.collection(CONSTANTS.COLLECTIONS.STATUS).findOne({
+        db.collection(CONSTANTS.COLLECTION.STATUS).findOne({
             name: "status"
         }, function(err, doc) {
             if (err) { manager.handleError(err, res); return; };
 
             if (!doc) {
-                db.collection(CONSTANTS.COLLECTIONS.STATUS).insertOne({
+                db.collection(CONSTANTS.COLLECTION.STATUS).insertOne({
                     name: "status",
                     running: true
                 }, function(err, result) {
@@ -64,7 +64,7 @@ module.exports = function(app, db) {
             return;
         }
 
-        db.collection(CONSTANTS.COLLECTIONS.STATUS).updateOne({
+        db.collection(CONSTANTS.COLLECTION.STATUS).updateOne({
             name: "status",
         }, {
             $set: { running: false }
@@ -96,7 +96,7 @@ module.exports = function(app, db) {
             return;
         }
 
-        db.collection(CONSTANTS.COLLECTIONS.STATUS).updateOne({
+        db.collection(CONSTANTS.COLLECTION.STATUS).updateOne({
             name: "status",
         }, {
             $set: { running: true }

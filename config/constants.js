@@ -1,16 +1,19 @@
 const ROUTES = {
     INDEX: "/",
     SHUTDOWN: "/shutdown",
-    TURNON: "/turnon"
+    TURNON: "/turnon",
+    LOGIN: "/login",
+    REGISTER: "/register"
 };
 
-const COLLECTIONS = {
-    STATUS: "status"
+const COLLECTION = {
+    STATUS: "status",
+    USER: "user"
 };
 
 const CONSTANTS = {
     ROUTES: ROUTES,
-    COLLECTIONS: COLLECTIONS
+    COLLECTION: COLLECTION
 };
 
 module.exports = CONSTANTS;
