@@ -3,6 +3,8 @@ const SECRETS = require("../secret");
 const bodyParser = require('body-parser');
 const manager = require("../helpers/manager");
 const mongo = require('mongodb');
+const FCM = require("../helpers/fcm");
+const fcm = new FCM();
 
 module.exports = function(app, db) {
 
