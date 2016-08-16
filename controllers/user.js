@@ -150,6 +150,8 @@ module.exports = function(app, db) {
                 } else if (user.password !== password) {
                     console.log("Wrong password");
                     res.status(401).json({ error: "Password incorrect" });
+                } else if (user.verified) {
+                    res.status(403).json({ error: "Already verified" });
                 } else {
                     manager.sendVerificationEmail(user, res);
                 }

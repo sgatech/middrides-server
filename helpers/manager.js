@@ -84,7 +84,7 @@ function sendVerificationEmail(user, res) {
     var url = "http://tpeterw.github.io";
 
     var message = {
-        from:    "No-reply" + SECRETS.email.user, 
+        from:    "No-reply<" + SECRETS.email.user + ">", 
         to:      user.email,
         subject: "MiddRides Email Verification",
         attachment: 
