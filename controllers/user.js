@@ -74,6 +74,7 @@ module.exports = function(app, db) {
                             if (!user) {
                                 res.status(500).json({ error: "Unknown error" });
                             } else {
+                                manager.sendVerificationEmail(user, null);
                                 res.status(200).json({
                                     error: "",
                                     user: user
