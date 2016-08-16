@@ -9,7 +9,8 @@ const ROUTES = {
     UPDATE_LOCATIONS: "/update",        // pubsafe push
     MAKE_REQUEST: "/request",
     CANCEL_REQUEST: "/cancel",
-    SEND: "/send"
+    SEND: "/send",                      // send verification email
+    ARRIVE: "/arrive"                   // arrive notification
 };
 
 const COLLECTION = {

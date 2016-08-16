@@ -10,9 +10,11 @@ const SECRETS = require("../secret");
  */
 function handleError(err, res) {
     console.log(err.message);
-    res.status(500).json({
-        error: "Internal Server Error"
-    });
+    if (res) {
+        res.status(500).json({
+            error: "Internal Server Error"
+        });
+    }
 }
 
 /**
@@ -69,6 +71,18 @@ function getUserFromBsonWithPassword(doc) {
 }
 
 /**
+ * Send fcm notification to channel
+ */
+function sendVanArrivingFCM(fcm, id, callback) {
+    fcm.sendMessage({
+        type: "arrive",
+        stopId: id
+    }, id, function(err) {
+        callback(err);
+    });
+}
+
+/**
  * Send verification email
  */
 function sendVerificationEmail(user, res) {
@@ -105,5 +119,6 @@ module.exports = {
     handleError,
     findUser,
     createUser,
-    sendVerificationEmail
+    sendVerificationEmail,
+    sendVanArrivingFCM
 }

@@ -23,11 +23,11 @@ module.exports = class FCM {
      */
     sendMessage(data, to, callback) {
         this.options.body = {
-            to: to || "/topics/global",
+            to: "/topics/" + to || "/topics/global",
             data: data
         };
         
-        console.log("Sending FCM request with body: " + this.options.headers.Authorization);
+        console.log("Sending FCM request with body: " + this.options.body.to);
         request(this.options, function(error, response, body) {
             if (error) {
                 return callback(error);

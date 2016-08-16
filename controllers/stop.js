@@ -194,4 +194,21 @@ module.exports = function(app, db) {
         });
     });
 
+    /**
+     * Send out fcm arrival notifications
+     * 
+     * Method: POST
+     * 
+     * body {
+     *      stopId
+     * }
+     */
+    app.post(CONSTANTS.ROUTES.ARRIVE, function(req, res, next) {
+        let stopId = req.body.stopId;
+        manager.sendVanArrivingFCM(fcm, stopId, function(err) {
+            if (err) manager.handleError(err, res);
+            else res.status(200).json({ error: "" });
+        });
+    });
+
 }
