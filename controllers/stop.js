@@ -31,7 +31,6 @@ module.exports = function(app, db) {
                 if (req.query.lastUpdated > doc['updatedTime'])
                     res.status(200).json({ hasUpdates: false });
                 else {
-                    // TODO: find all the stops
                     let stops = [];
                     let cursor = db.collection(CONSTANTS.COLLECTION.STOP).find();
                     cursor.each(function(err, item) {
