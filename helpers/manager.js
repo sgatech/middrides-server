@@ -21,17 +21,9 @@ function findUser(db, email, callback) {
     db.collection(CONSTANTS.COLLECTION.USER).findOne({
         email: email
     }, function(err, doc) {
-        if (err) {
-            console.log(err.message);
-            callback(err, null);
-            return;
-        }
-        if (!doc) {
-            callback(null, null);
-            return;
-        }
-        
-        callback(null, getUserFromBsonWithPassword(doc));
+        if (err) { callback(err, null); }
+        else if (!doc) { callback(null, null); }
+        else callback(null, getUserFromBsonWithPassword(doc));
     });
 }
 

@@ -6,7 +6,9 @@ const ROUTES = {
     REGISTER: "/register",
     CHANGE_PASSWORD: "/changepwd",
     SYNC_LOCATIONS: "/location",        // user pull
-    UPDATE_LOCATIONS: "/update"         // pubsafe push
+    UPDATE_LOCATIONS: "/update",        // pubsafe push
+    MAKE_REQUEST: "/request",
+    CANCEL_REQUEST: "/cancel"
 };
 
 const COLLECTION = {

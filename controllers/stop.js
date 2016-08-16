@@ -2,6 +2,7 @@ const CONSTANTS = require("../config/constants");
 const SECRETS = require("../secret");
 const bodyParser = require('body-parser');
 const manager = require("../helpers/manager");
+const mongo = require('mongodb');
 
 module.exports = function(app, db) {
 
@@ -108,6 +109,76 @@ module.exports = function(app, db) {
                             }
                         });
                     }
+                });
+            }
+        });
+    });
+
+    /**
+     * Make request
+     * 
+     * Method: POST
+     * 
+     * body {
+     *      email
+     *      password
+     *      stopId
+     * }
+     * 
+     * res {
+     *      error
+     * }
+     */
+    app.post(CONSTANTS.ROUTES.MAKE_REQUEST, function(req, res, next) {
+        manager.findUser(db, req.body.email, function(err, user) {
+            if (err) manager.handleError(err, res);
+            else {
+                if (user.password !== req.body.password) {
+                    res.status(401).json({ error: "Authentication error" });
+                    return;
+                }
+                db.collection(CONSTANTS.COLLECTION.STOP).updateOne({
+                    _id: new mongo.ObjectID(req.body.stopId)
+                }, {
+                    $inc: { waiting: 1 }
+                }, function(err, result) {
+                    if (err) { manager.handleError(err, res); return; }
+                    res.status(200).json({ error: "" });
+                });
+            }
+        });
+    });
+
+    /**
+     * Cancel request
+     * 
+     * Method: DELETE
+     * 
+     * body {
+     *      email
+     *      password
+     *      stopId
+     * }
+     * 
+     * res {
+     *      error
+     * }
+     */
+    app.delete(CONSTANTS.ROUTES.CANCEL_REQUEST, function(req, res, next) {
+        manager.findUser(db, req.query.email, function(err, user) {
+            if (err) manager.handleError(err, res);
+            else {
+                if (user.password !== req.query.password) {
+                    res.status(401).json({ error: "Authentication error" });
+                    return;
+                }
+                db.collection(CONSTANTS.COLLECTION.STOP).updateOne({
+                    _id: new mongo.ObjectID(req.query.stopId)
+                }, {
+                    $inc: { waiting: -1 }
+                }, function(err, result) {
+                    if (err) { manager.handleError(err, res); return; }
+                    res.status(200).json({ error: "" });
                 });
             }
         });

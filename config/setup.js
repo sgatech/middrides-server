@@ -39,7 +39,7 @@ module.exports = function (app, config) {
 
             // middlewares for handling uncaught errors 
             app.use((req, res, next) => {
-                const err = new Error('Not Found');
+                const err = new Error("Not Found");
                 res.status(404);
                 next(err);
             });
@@ -47,7 +47,7 @@ module.exports = function (app, config) {
             app.use((err, req, res, next) => {
                 console.log(err);
                 res.status(err.status || 500);
-                res.json({'error': error.message});
+                res.json({ error: error.message });
             });
 
 
