@@ -1,4 +1,5 @@
 const CONSTANTS = require("../config/constants");
+const SECRETS = require("../secret");
 
 /**
  * Handle general server internal error
@@ -67,8 +68,41 @@ function getUserFromBsonWithPassword(doc) {
     return user;
 }
 
+/**
+ * Send verification email
+ */
+function sendVerificationEmail(user, res) {
+    var email   = require("emailjs");
+    var server  = email.server.connect({
+        user:    SECRETS.email.user, 
+        password:SECRETS.email.password, 
+        host:    "ssmtp.middlebury.edu",
+        tls:     true
+    });
+
+    // TODO: until we have a server, user['_id']
+    var url = "http://tpeterw.github.io";
+
+    var message = {
+        from:    "No-reply" + SECRETS.email.user, 
+        to:      user.email,
+        subject: "MiddRides Email Verification",
+        attachment: 
+        [
+            { data: "MiddRides: <br><a href=\"" + url + "\">Please click to verify your email</a>", alternative:true }
+        ]
+    };
+
+    // send the message and get a callback with an error or details of the message that was sent
+    server.send(message, function(err, message) { 
+        console.log(err || message);
+        res.status(200).send(err || message);
+    });
+}
+
 module.exports = {
     handleError,
     findUser,
-    createUser
+    createUser,
+    sendVerificationEmail
 }

@@ -8,7 +8,8 @@ const ROUTES = {
     SYNC_LOCATIONS: "/location",        // user pull
     UPDATE_LOCATIONS: "/update",        // pubsafe push
     MAKE_REQUEST: "/request",
-    CANCEL_REQUEST: "/cancel"
+    CANCEL_REQUEST: "/cancel",
+    SEND: "/send"
 };
 
 const COLLECTION = {

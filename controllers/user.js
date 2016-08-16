@@ -86,6 +86,15 @@ module.exports = function(app, db) {
         });
     });
 
+    /**
+     * Change password
+     * 
+     * Method: POST
+     * 
+     * res {
+     *      error
+     * }
+     */
     app.post(CONSTANTS.ROUTES.CHANGE_PASSWORD, function(req, res, next) {
         let email = req.body.email;
         let oldPassword = req.body.oldPassword;
@@ -113,7 +122,38 @@ module.exports = function(app, db) {
                     });
                 }
             }
-        })
-    })
+        });
+    });
+
+    /**
+     * (Re-)Send verification email
+     * 
+     * Method: POST
+     * 
+     * res {
+     *      error || message
+     * }
+     */
+    app.post(CONSTANTS.ROUTES.SEND, function(req, res, next) {
+        let email = req.body.email;
+        let password = req.body.password;
+
+        manager.findUser(db, email, function(err, user) {
+            // internal error
+            if (err) manager.handleError(err, res);
+            else {
+                // user doesn't exist
+                if (!user) {
+                    console.log("User not found");
+                    res.status(404).json({ error: "User not found" });
+                } else if (user.password !== password) {
+                    console.log("Wrong password");
+                    res.status(401).json({ error: "Password incorrect" });
+                } else {
+                    manager.sendVerificationEmail(user, res);
+                }
+            }
+        });
+    });
 
 }
