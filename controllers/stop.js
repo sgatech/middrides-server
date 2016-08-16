@@ -82,7 +82,7 @@ module.exports = function(app, db) {
         for (let key in req.body) {
             stops.push({
                 name: req.body[key],
-                waiting: 0
+                waiting: []
             });
         }
         db.collection(CONSTANTS.COLLECTION.STOP).deleteMany({}, function(err, result) {
@@ -139,7 +139,12 @@ module.exports = function(app, db) {
                 db.collection(CONSTANTS.COLLECTION.STOP).updateOne({
                     _id: new mongo.ObjectID(req.body.stopId)
                 }, {
-                    $inc: { waiting: 1 }
+                    $push: { waiting:
+                        {
+                            email: req.body.email,
+                            time: new Date().getTime()
+                        }
+                    }
                 }, function(err, result) {
                     if (err) { manager.handleError(err, res); return; }
                     res.status(200).json({ error: "" });
@@ -174,7 +179,11 @@ module.exports = function(app, db) {
                 db.collection(CONSTANTS.COLLECTION.STOP).updateOne({
                     _id: new mongo.ObjectID(req.query.stopId)
                 }, {
-                    $inc: { waiting: -1 }
+                    $pull: { waiting: 
+                        {
+                            email: req.query.email 
+                        }
+                    }
                 }, function(err, result) {
                     if (err) { manager.handleError(err, res); return; }
                     res.status(200).json({ error: "" });
