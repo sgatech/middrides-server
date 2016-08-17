@@ -54,7 +54,7 @@ module.exports = function(app, db) {
      *      status
      * }
      */
-    app.post(CONSTANTS.ROUTES.SHUTDOWN, bodyParser.urlencoded({ extended: true }), function(req, res, next) {
+    app.post(CONSTANTS.ROUTES.SHUTDOWN, bodyParser.json(), function(req, res, next) {
         if (req.body.password !== SECRETS.password) {
             res.status(401).json({ error: "Password incorrect" });
             return;
@@ -86,7 +86,7 @@ module.exports = function(app, db) {
      *      status
      * }
      */
-    app.post(CONSTANTS.ROUTES.TURNON, bodyParser.urlencoded({ extended: true }), function(req, res, next) {
+    app.post(CONSTANTS.ROUTES.TURNON, bodyParser.json(), function(req, res, next) {
         if (req.body.password !== SECRETS.password) {
             res.status(401).json({ error: "Password incorrect" });
             return;
