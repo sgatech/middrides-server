@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h2(class="form-signin-heading blue-text") MiddRides Dispatcher Portal
+
+    form(action="/pubsafe", method="get")
+        br
+        input(type="text" class="form-control" name="password" placeholder="Password" style="width:30%; margin:0 auto")
+        button(type="submit" class="btn btn-primary" value="Sign In" style="width:30%; position:absolute; left:35%") Sign In
+
+        if error
+            br
+            h2(style="text-align:center; color:red")=error

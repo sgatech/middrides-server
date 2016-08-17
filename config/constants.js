@@ -13,10 +13,12 @@ const ROUTES = {
     SEND: "/send",                      // send verification email
     ARRIVE: "/arrive",                  // arrive notification
     VERIFY: "/verify",
-    DISPATCHER: "/dispatcher"
+    DISPATCHER: "/dispatcher",
+    PUBSAFE: "/pubsafe"
 };
 
 const VIEWS = {
+    LOGIN: "login",
     INDEX: "index"
 };
 

@@ -107,13 +107,30 @@ module.exports = function(app, db) {
             });
         });
     });
+    
+    /**
+     * Login page for dispatcher
+     */
+    app.get(CONSTANTS.ROUTES.DISPATCHER, function(req, res, next) {
+        res.status(200).render(CONSTANTS.VIEWS.LOGIN, {
+            title: "MiddRides Dispatcher Login"
+        });
+    });
 
     /**
      * Homepage for dispatcher
      */
-    app.get(CONSTANTS.ROUTES.DISPATCHER, function(req, res, next) {
-        let stops = [];
+    app.get(CONSTANTS.ROUTES.PUBSAFE, function(req, res, next) {
+        if (req.query.password !== SECRETS.password) {
+            console.log("Wrong password");
+            res.render(CONSTANTS.VIEWS.LOGIN, {
+                title: "MiddRides Dispatcher Login",
+                error: "Wrong Password"
+            });
+            return;
+        }
 
+        let stops = [];
         let cursor = db.collection(CONSTANTS.COLLECTION.STOP).find();
         cursor.each(function(err, item) {
             if (item) {
