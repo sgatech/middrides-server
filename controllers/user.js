@@ -87,6 +87,16 @@ module.exports = function(app, db) {
         });
     });
 
+    /**
+     * Synchronize user
+     * 
+     * Method: GET
+     * 
+     * res {
+     *      email
+     *      verified
+     * }
+     */
     app.get(CONSTANTS.ROUTES.SYNC_USER, function(req, res, next) {
         let email = req.query.email;
         let password = req.query.password;
