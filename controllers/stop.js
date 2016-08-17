@@ -2,7 +2,6 @@ const CONSTANTS = require("../config/constants");
 const SECRETS = require("../secret");
 const bodyParser = require('body-parser');
 const manager = require("../helpers/manager");
-const mongo = require('mongodb');
 const FCM = require("../helpers/fcm");
 const fcm = new FCM();
 
@@ -24,7 +23,7 @@ module.exports = function(app, db) {
      *      [list of locations]
      * }
      */
-    app.get(CONSTANTS.ROUTES.SYNC_LOCATIONS, function(req, res, next) {
+    app.get(CONSTANTS.ROUTES.SYNC_STOPS, function(req, res, next) {
         db.collection(CONSTANTS.COLLECTION.STATUS).findOne({
             name: "lastUpdated"
         }, function(err, doc) {
@@ -73,7 +72,7 @@ module.exports = function(app, db) {
      *      inserted
      * }
      */
-    app.post(CONSTANTS.ROUTES.UPDATE_LOCATIONS, function(req, res, next) {
+    app.post(CONSTANTS.ROUTES.UPDATE_STOPS, function(req, res, next) {
         if (req.body.password !== SECRETS.password) {
             res.status(401).json({ error: "Password incorrect" });
             return;
@@ -131,7 +130,7 @@ module.exports = function(app, db) {
      * }
      */
     app.post(CONSTANTS.ROUTES.MAKE_REQUEST, function(req, res, next) {
-        manager.findUser(db, req.body.email, function(err, user) {
+        manager.findUserByEmail(db, req.body.email, function(err, user) {
             if (err) manager.handleError(err, res);
             else {
                 if (user.password !== req.body.password) {
@@ -139,7 +138,7 @@ module.exports = function(app, db) {
                     return;
                 }
                 db.collection(CONSTANTS.COLLECTION.STOP).updateOne({
-                    _id: new mongo.ObjectID(req.body.stopId)
+                    _id: manager.getObjectId(req.body.stopId)
                 }, {
                     $push: { waiting:
                         {
@@ -171,7 +170,7 @@ module.exports = function(app, db) {
      * }
      */
     app.delete(CONSTANTS.ROUTES.CANCEL_REQUEST, function(req, res, next) {
-        manager.findUser(db, req.query.email, function(err, user) {
+        manager.findUserByEmail(db, req.query.email, function(err, user) {
             if (err) manager.handleError(err, res);
             else {
                 if (user.password !== req.query.password) {
@@ -179,7 +178,7 @@ module.exports = function(app, db) {
                     return;
                 }
                 db.collection(CONSTANTS.COLLECTION.STOP).updateOne({
-                    _id: new mongo.ObjectID(req.query.stopId)
+                    _id: manager.getObjectId(req.query.stopId)
                 }, {
                     $pull: { waiting: 
                         {

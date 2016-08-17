@@ -4,13 +4,15 @@ const ROUTES = {
     TURNON: "/turnon",
     LOGIN: "/login",
     REGISTER: "/register",
+    SYNC_USER: "/sync",
     CHANGE_PASSWORD: "/changepwd",
-    SYNC_LOCATIONS: "/location",        // user pull
-    UPDATE_LOCATIONS: "/update",        // pubsafe push
+    SYNC_STOPS: "/stops",        // user pull
+    UPDATE_STOPS: "/update",        // pubsafe push
     MAKE_REQUEST: "/request",
     CANCEL_REQUEST: "/cancel",
     SEND: "/send",                      // send verification email
-    ARRIVE: "/arrive"                   // arrive notification
+    ARRIVE: "/arrive",                  // arrive notification
+    VERIFY: "/verify"
 };
 
 const COLLECTION = {

@@ -1,5 +1,6 @@
 const CONSTANTS = require("../config/constants");
 const SECRETS = require("../secret");
+const mongo = require('mongodb');
 
 /**
  * Handle general server internal error
@@ -18,14 +19,27 @@ function handleError(err, res) {
 }
 
 /**
- * Find user in database
+ * Find user in database by email
  */
-function findUser(db, email, callback) {
+function findUserByEmail(db, email, callback) {
     db.collection(CONSTANTS.COLLECTION.USER).findOne({
         email: email
     }, function(err, doc) {
-        if (err) { callback(err, null); }
-        else if (!doc) { callback(null, null); }
+        if (err) callback(err, null);
+        else if (!doc) callback(null, null);
+        else callback(null, getUserFromBsonWithPassword(doc));
+    });
+}
+
+/**
+ * Find user in databse by user ID
+ */
+function findUserById(db, id, callback) {
+    db.collection(CONSTANTS.COLLECTION.USER).findOne({
+        _id: id
+    }, function(err, doc) {
+        if (err) callback(err, null);
+        else if (!doc) callback(null, null);
         else callback(null, getUserFromBsonWithPassword(doc));
     });
 }
@@ -41,7 +55,7 @@ function createUser(db, email, password, callback) {
     }, function(err, result) {
         if (err) callback(err, null);       // back to router for handling
         else {
-            findUser(db, email, function(err, user) {
+            findUserByEmail(db, email, function(err, user) {
                 if (err) callback(err, null);
                 else callback(err, getUserFromBson(user));
             });
@@ -68,6 +82,13 @@ function getUserFromBsonWithPassword(doc) {
     user['verified'] = doc.verified;
     user['password'] = doc.password;
     return user;
+}
+
+/**
+ * Get mongodb formatted _id
+ */
+function getObjectId(id) {
+    return new mongo.ObjectID(id);
 }
 
 /**
@@ -117,8 +138,10 @@ function sendVerificationEmail(user, res) {
 
 module.exports = {
     handleError,
-    findUser,
+    findUserByEmail,
+    findUserById,
     createUser,
+    getObjectId,
     sendVerificationEmail,
     sendVanArrivingFCM
 }

@@ -20,7 +20,7 @@ module.exports = function(app, db) {
     app.post(CONSTANTS.ROUTES.LOGIN, function(req, res, next) {
         let email = req.body.email;
         let password = req.body.password;
-        manager.findUser(db, email, function(err, user) {
+        manager.findUserByEmail(db, email, function(err, user) {
             // internal error
             if (err) manager.handleError(err, res); 
             else {
@@ -59,7 +59,7 @@ module.exports = function(app, db) {
     app.post(CONSTANTS.ROUTES.REGISTER, function(req, res, next) {
         let email = req.body.email;
         let password = req.body.password;
-        manager.findUser(db, email, function(err, user) {
+        manager.findUserByEmail(db, email, function(err, user) {
             // internal error
             if (err) manager.handleError(err, res);
             else {
@@ -87,6 +87,30 @@ module.exports = function(app, db) {
         });
     });
 
+    app.get(CONSTANTS.ROUTES.SYNC_USER, function(req, res, next) {
+        let email = req.query.email;
+        let password = req.query.password;
+        manager.findUserByEmail(db, email, function(err, user) {
+            // internal error
+            if (err) manager.handleError(err, res);
+            else {
+                // user exists
+                if (!user) {
+                    console.log("User exists");
+                    res.status(404).json({ error: "User not found" });
+                } else if (user.password !== password) {
+                    console.log("Wrong password");
+                    res.status(401).json({ error: "Password incorrect" });
+                } else {
+                    res.status(200).json({
+                        email: email,
+                        verified: user.verified
+                    });
+                }
+            }
+        });
+    });
+
     /**
      * Change password
      * 
@@ -101,7 +125,7 @@ module.exports = function(app, db) {
         let oldPassword = req.body.oldPassword;
         let newPassword = req.body.newPassword;
 
-        manager.findUser(db, email, function(err, user) {
+        manager.findUserByEmail(db, email, function(err, user) {
             // internal error
             if (err) manager.handleError(err, res);
             else {
@@ -139,7 +163,7 @@ module.exports = function(app, db) {
         let email = req.body.email;
         let password = req.body.password;
 
-        manager.findUser(db, email, function(err, user) {
+        manager.findUserByEmail(db, email, function(err, user) {
             // internal error
             if (err) manager.handleError(err, res);
             else {
@@ -154,6 +178,43 @@ module.exports = function(app, db) {
                     res.status(403).json({ error: "Already verified" });
                 } else {
                     manager.sendVerificationEmail(user, res);
+                }
+            }
+        });
+    });
+
+    /**
+     * Verify email for each individual user
+     * 
+     * Method: GET
+     * 
+     * query: {
+     *      userId
+     * }
+     * 
+     * res: You have successfully verified your email!
+     */
+    app.get(CONSTANTS.ROUTES.VERIFY, function(req, res, next) {
+        let userId = manager.getObjectId(req.query.userId);
+        manager.findUserById(db, userId, function(err, user) {
+            // internal error
+            if (err) manager.handleError(err, res);
+            else {
+                // user doesn't exist
+                if (!user) {
+                    console.log("User not found");
+                    res.status(404).send("User not found");
+                } else if (user.verified) {
+                    res.status(403).send("Already verified");
+                } else {
+                    db.collection(CONSTANTS.COLLECTION.USER).updateOne({
+                        email: user.email
+                    }, {
+                        $set: { verified: true }
+                    }, function(err, result) {
+                        if (err) res.status(500).send("Failed to verify user");
+                        else res.status(200).send("Successfully verified " + user.email);
+                    });
                 }
             }
         });
