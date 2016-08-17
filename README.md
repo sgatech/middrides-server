@@ -4,7 +4,6 @@ MiddRides server for dispatchers
 <br/><br/>
 
 ## Tools and dependencies
-----
 * Node ^6.3.0
 * npm ^3.10.5
 * modules
@@ -23,7 +22,6 @@ MiddRides server for dispatchers
 <br/>
 
 ## Install
-----
     git clone https://github.com/Midd-Rides/MiddRides-Server.git
 
 Go to root directory, install dependencies by
@@ -39,6 +37,5 @@ And start debugging!
 <br/>
 
 ## APIs and Structure
-----
 
 [Wiki](https://github.com/Midd-Rides/MiddRides-Server/wiki)
