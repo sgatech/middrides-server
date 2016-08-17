@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const manager = require("../helpers/manager");
 
 module.exports = function(app, db) {
-
-    app.use(bodyParser.urlencoded({ extended: true }));
     
     /**
      * Log into server
@@ -17,7 +15,7 @@ module.exports = function(app, db) {
      *      status
      * }
      */
-    app.post(CONSTANTS.ROUTES.LOGIN, function(req, res, next) {
+    app.post(CONSTANTS.ROUTES.LOGIN, bodyParser.urlencoded({ extended: true }), function(req, res, next) {
         let email = req.body.email;
         let password = req.body.password;
         manager.findUserByEmail(db, email, function(err, user) {
@@ -56,7 +54,7 @@ module.exports = function(app, db) {
      *      status
      * }
      */
-    app.post(CONSTANTS.ROUTES.REGISTER, function(req, res, next) {
+    app.post(CONSTANTS.ROUTES.REGISTER, bodyParser.urlencoded({ extended: true }), function(req, res, next) {
         let email = req.body.email;
         let password = req.body.password;
         manager.findUserByEmail(db, email, function(err, user) {
@@ -130,7 +128,7 @@ module.exports = function(app, db) {
      *      error
      * }
      */
-    app.post(CONSTANTS.ROUTES.CHANGE_PASSWORD, function(req, res, next) {
+    app.post(CONSTANTS.ROUTES.CHANGE_PASSWORD, bodyParser.urlencoded({ extended: true }), function(req, res, next) {
         let email = req.body.email;
         let oldPassword = req.body.oldPassword;
         let newPassword = req.body.newPassword;
@@ -169,7 +167,7 @@ module.exports = function(app, db) {
      *      error || message
      * }
      */
-    app.post(CONSTANTS.ROUTES.SEND, function(req, res, next) {
+    app.post(CONSTANTS.ROUTES.SEND, bodyParser.urlencoded({ extended: true }), function(req, res, next) {
         let email = req.body.email;
         let password = req.body.password;
 
