@@ -115,8 +115,7 @@ function sendVerificationEmail(user, res) {
         tls:     true
     });
 
-    // TODO: until we have a server, user['_id']
-    var url = "http://tpeterw.github.io";
+    var url = SECRETS.email.url + "/verify?userId=" + user._id;
 
     var message = {
         from:    "No-reply<" + SECRETS.email.user + ">", 
