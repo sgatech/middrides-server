@@ -13,10 +13,11 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             url: "/arrive",
-            processData: true,
+            processData: false,
             contentType: "application/json; charset=utf-8",
             data: data,
-            dataType: "json",
+            // this affects "success" callback, what the fish?
+            // dataType: "json",
             success: function(r) {
                 alert("Passengers are being alerted");
             }
