@@ -12,7 +12,12 @@ const ROUTES = {
     CANCEL_REQUEST: "/cancel",
     SEND: "/send",                      // send verification email
     ARRIVE: "/arrive",                  // arrive notification
-    VERIFY: "/verify"
+    VERIFY: "/verify",
+    DISPATCHER: "/dispatcher"
+};
+
+const VIEWS = {
+    INDEX: "index"
 };
 
 const COLLECTION = {
@@ -23,6 +28,7 @@ const COLLECTION = {
 
 const CONSTANTS = {
     ROUTES: ROUTES,
+    VIEWS: VIEWS,
     COLLECTION: COLLECTION
 };
 

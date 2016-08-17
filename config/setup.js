@@ -2,6 +2,7 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var glob = require('glob');
 var favicon = require('serve-favicon');
+var fs = require('fs');
 var MongoClient = require('mongodb').MongoClient;
 
 var db, server;
@@ -35,9 +36,24 @@ module.exports = function (app, config) {
             
             // external module for handling favourite icon
             app.use(favicon(__dirname + "/../public/img/favicon.ico"));
+            
+            // view engine
+            app.set('views', config.root + '/public/views');
+            app.set("view engine", "pug");
+            
+            // middleware for handling file downloads
+            app.get("*", function(req, res, next) {
+                if (fs.existsSync(config.root + req.url)) {
+                    let file = config.root + req.url;
+                    res.download(file);
+                } else {
+                    const err = new Error("Not Found");
+                    res.status(404);
+                    next(err);
+                }
+            });
 
-
-            // middlewares for handling uncaught errors 
+            // middlewares for handling uncaught errors
             app.use((req, res, next) => {
                 const err = new Error("Not Found");
                 res.status(404);

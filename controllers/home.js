@@ -109,4 +109,13 @@ module.exports = function(app, db) {
             });
         });
     });
+
+    /**
+     * Homepage for dispatcher
+     */
+    app.get(CONSTANTS.ROUTES.DISPATCHER, function(req, res, next) {
+        res.status(200).render(CONSTANTS.VIEWS.INDEX, {
+            title: "MiddRides Dispatcher Page"
+        });
+    });
 }
