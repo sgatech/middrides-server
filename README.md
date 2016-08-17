@@ -28,7 +28,12 @@ Go to root directory, install dependencies by
     
     npm install
 
-Run server by
+Then open a separate tab for terminal/console and run
+
+    chmod +x mongo.sh
+    ./mongo.sh
+
+Finally, run server by
 
     npm start
 
