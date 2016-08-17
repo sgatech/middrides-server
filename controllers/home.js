@@ -114,8 +114,22 @@ module.exports = function(app, db) {
      * Homepage for dispatcher
      */
     app.get(CONSTANTS.ROUTES.DISPATCHER, function(req, res, next) {
-        res.status(200).render(CONSTANTS.VIEWS.INDEX, {
-            title: "MiddRides Dispatcher Page"
+        let stops = [];
+
+        let cursor = db.collection(CONSTANTS.COLLECTION.STOP).find();
+        cursor.each(function(err, item) {
+            if (item) {
+                stops.push({
+                    stopName: item.name,
+                    numWaiting: item.waiting.length,
+                    stopId: item._id
+                });
+            } else {
+                res.status(200).render(CONSTANTS.VIEWS.INDEX, {
+                    title: "MiddRides Dispatcher Portal",
+                    stops: stops
+                });
+            }
         });
     });
 }

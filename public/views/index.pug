@@ -1,4 +1,44 @@
 extends layout
 
 block content
-    p Hahaha
+    - var allStops = stops
+    mixin tableRow(stopName, numWaiting, stopId)
+        tr(id=stopId)
+            td=stopName
+            td=numWaiting
+            td
+                form(action="/arrive", method="post")
+                    button(type="submit", class="btn btn-primary btn-arrive", name="stopId", value=stopId) Alert Passenger
+            td
+                input(type="text")
+            td
+                butotn(type="button", class="btn btn-primary") Clear
+    
+    div(class="container stop_table")
+        h2(class="form-signin-heading blue-text") MiddRides Dispatcher Portal
+        //- Links to other views
+        div(class="row other_views")
+            div(class="col-sm-4")
+                a(href="announcement.html") Make an Announcement
+            div(class="col-sm-4")
+                a(href="dispatcher_settings.html") Settings
+            div(class="col-sm-4")
+                a(href="login.html") Logout
+    
+    table(class="table table-bordered table-striped")
+        thead
+            tr
+                th(class="table_column") Stop Name
+                th Passenger Waiting
+                th Alert
+                th Update Stop
+                th Clear Stop
+        tbody
+            each stop in stops
+                +tableRow(stop.stopName, stop.numWaiting, stop.stopId)
+    
+    div(class="center-block")
+        button(type="button", class="btn btn-success bottom-button center-block", style="width:20em") Update table
+        butotn(type="button", class="btn btn-danger bottom-button center-block", style="width:20em") Shutdown MiddRides
+    
+    script(type="text/javascript" src="/public/scripts/index.js")

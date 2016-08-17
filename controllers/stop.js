@@ -52,8 +52,6 @@ module.exports = function(app, db) {
         });
     });
 
-    app.use(bodyParser.urlencoded({ extended: true }));
-
     /**
      * For pubsafe to update locations
      * 
@@ -72,7 +70,7 @@ module.exports = function(app, db) {
      *      inserted
      * }
      */
-    app.post(CONSTANTS.ROUTES.UPDATE_STOPS, function(req, res, next) {
+    app.post(CONSTANTS.ROUTES.UPDATE_STOPS, bodyParser.urlencoded({ extended: true }), function(req, res, next) {
         if (req.body.password !== SECRETS.password) {
             res.status(401).json({ error: "Password incorrect" });
             return;
@@ -129,7 +127,7 @@ module.exports = function(app, db) {
      *      error
      * }
      */
-    app.post(CONSTANTS.ROUTES.MAKE_REQUEST, function(req, res, next) {
+    app.post(CONSTANTS.ROUTES.MAKE_REQUEST, bodyParser.urlencoded({ extended: true }), function(req, res, next) {
         manager.findUserByEmail(db, req.body.email, function(err, user) {
             if (err) manager.handleError(err, res);
             else {
@@ -202,11 +200,11 @@ module.exports = function(app, db) {
      *      stopId
      * }
      */
-    app.post(CONSTANTS.ROUTES.ARRIVE, function(req, res, next) {
+    app.post(CONSTANTS.ROUTES.ARRIVE, bodyParser.json(), function(req, res, next) {
         let stopId = req.body.stopId;
         manager.sendVanArrivingFCM(fcm, stopId, function(err) {
             if (err) manager.handleError(err, res);
-            else res.status(200).json({ error: "" });
+            else res.end();
         });
     });
 
