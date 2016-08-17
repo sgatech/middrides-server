@@ -10,23 +10,14 @@ MiddRides server for dispatchers
 * modules
 
         "body-parser": "^1.15.2"
-
         "emailjs": "^1.0.5"
-
         "express": "^4.14.0"
-
         "glob": "^7.0.5"
-
         "mongodb": "^2.2.5"
-
         "morgan": "^1.7.0"
-
         "path": "^0.12.7"
-
         "pug": "^2.0.0-beta5"
-
         "request": "^2.74.0"
-
         "serve-favicon": "^2.3.0"
 
 <br/>
