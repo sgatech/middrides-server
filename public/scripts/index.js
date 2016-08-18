@@ -72,7 +72,14 @@ function getWaiting() {
         success: function(r) {
             for (var i = 0; i < r.stops.length; i++) {
                 var stop = r.stops[i];
-                $('#' + stop.stopId).find('td.num-waiting').html(stop.numWaiting);
+                var td = $('#' + stop.stopId).find('td.num-waiting');
+                if (parseInt(td.html()) !== stop.numWaiting) {
+                    td.html(stop.numWaiting);
+                    td.animate({ backgroundColor: "#00FF00" }, 500);
+                    setInterval(function() {
+                        td.animate({ backgroundColor: "#FFFFFF" }, 500);
+                    }, 1000);
+                }
             }
         }
     });
