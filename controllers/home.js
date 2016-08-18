@@ -20,9 +20,8 @@ module.exports = function(app, db) {
         db.collection(CONSTANTS.COLLECTION.STATUS).findOne({
             name: "status"
         }, function(err, doc) {
-            if (err) { manager.handleError(err, res); return; };
-
-            if (!doc) {
+            if (err) { manager.handleError(err, res); }
+            else if (!doc) {
                 db.collection(CONSTANTS.COLLECTION.STATUS).insertOne({
                     name: "status",
                     running: true
@@ -130,19 +129,27 @@ module.exports = function(app, db) {
             return;
         }
 
-        let stops = [];
-        let cursor = db.collection(CONSTANTS.COLLECTION.STOP).find();
-        cursor.each(function(err, item) {
-            if (item) {
-                stops.push({
-                    stopName: item.name,
-                    numWaiting: item.waiting.length,
-                    stopId: item._id
-                });
-            } else {
-                res.status(200).render(CONSTANTS.VIEWS.INDEX, {
-                    title: "MiddRides Dispatcher Portal",
-                    stops: stops
+        db.collection(CONSTANTS.COLLECTION.STATUS).findOne({
+            name: "status"
+        }, function(err, doc) {
+            if (err) manager.handleError(err, res)
+            else {
+                let stops = [];
+                let cursor = db.collection(CONSTANTS.COLLECTION.STOP).find();
+                cursor.each(function(err, item) {
+                    if (item) {
+                        stops.push({
+                            stopName: item.name,
+                            numWaiting: item.waiting.length,
+                            stopId: item._id
+                        });
+                    } else {
+                        res.status(200).render(CONSTANTS.VIEWS.INDEX, {
+                            title: "MiddRides Dispatcher Portal",
+                            running: doc['running'],
+                            stops: stops
+                        });
+                    }
                 });
             }
         });

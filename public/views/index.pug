@@ -39,6 +39,8 @@ block content
     
     div(class="center-block")
         button(id="update", type="button", class="btn btn-success bottom-button center-block", style="width:20em") Update table
-        butotn(id="switch", class="btn btn-danger bottom-button center-block", style="width:20em") Shutdown MiddRides
-        
+        if running
+            button(id="switch", class="btn btn-danger bottom-button center-block", style="width:20em") Shutdown MiddRides
+        else
+            button(id="switch", class="btn btn-danger bottom-button center-block", style="width:20em") Turn on MiddRides
     script(type="text/javascript" src="/public/scripts/index.js")
