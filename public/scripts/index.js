@@ -58,5 +58,22 @@ $(document).ready(function() {
         }
     });
 
-
 });
+
+/**
+ * Ask server for number of people waiting at each stop
+ */
+function getWaiting() {
+    $.ajax({
+        type: "GET",
+        url: "/getwaiting",
+        processData: false,
+        contentType: "application/json; charset=utf-8",
+        success: function(r) {
+            for (var i = 0; i < r.stops.length; i++) {
+                var stop = r.stops[i];
+                $('#' + stop.stopId).find('td.num-waiting').html(stop.numWaiting);
+            }
+        }
+    });
+}

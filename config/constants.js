@@ -14,7 +14,8 @@ const ROUTES = {
     ARRIVE: "/arrive",                  // arrive notification
     VERIFY: "/verify",
     DISPATCHER: "/dispatcher",
-    PUBSAFE: "/pubsafe"
+    PUBSAFE: "/pubsafe",
+    GET_WAITING: "/getwaiting"
 };
 
 const VIEWS = {

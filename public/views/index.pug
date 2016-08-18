@@ -5,7 +5,7 @@ block content
     mixin tableRow(stopName, numWaiting, stopId)
         tr(id=stopId)
             td=stopName
-            td=numWaiting
+            td(class="num-waiting")=numWaiting
             td
                 form(action="/arrive", method="post")
                     button(type="submit", class="btn btn-primary btn-arrive", name="stopId", value=stopId) Alert Passenger
@@ -38,7 +38,7 @@ block content
                 +tableRow(stop.stopName, stop.numWaiting, stop.stopId)
     
     div(class="center-block")
-        button(id="update", type="button", class="btn btn-success bottom-button center-block", style="width:20em") Update table
+        button(id="update" onclick="getWaiting()" type="button" class="btn btn-success bottom-button center-block" style="width:20em") Update table
         if running
             button(id="switch", class="btn btn-danger bottom-button center-block", style="width:20em") Shutdown MiddRides
         else

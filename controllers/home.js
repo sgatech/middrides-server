@@ -129,11 +129,13 @@ module.exports = function(app, db) {
             return;
         }
 
+        // first query for server running status
         db.collection(CONSTANTS.COLLECTION.STATUS).findOne({
             name: "status"
         }, function(err, doc) {
             if (err) manager.handleError(err, res)
             else {
+                // then find all the stops
                 let stops = [];
                 let cursor = db.collection(CONSTANTS.COLLECTION.STOP).find();
                 cursor.each(function(err, item) {

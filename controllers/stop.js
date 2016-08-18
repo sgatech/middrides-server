@@ -208,4 +208,37 @@ module.exports = function(app, db) {
         });
     });
 
+    /**
+     * Get number of people waiting at each stop
+     * 
+     * Method: GET
+     * 
+     * res {
+     *      stops: [
+     *          {
+     *              stopId
+     *              waiting
+     *          }
+     *      ]
+     * }
+     */
+    app.get(CONSTANTS.ROUTES.GET_WAITING, function(req, res, next) {
+        // we don't check password here
+        // everyone is welcome to use this api
+        let stops = [];
+        let cursor = db.collection(CONSTANTS.COLLECTION.STOP).find();
+        cursor.each(function(err, item) {
+            if (item) {
+                stops.push({
+                    stopId: item._id,
+                    numWaiting: item.waiting.length
+                });
+            } else {
+                res.status(200).json({
+                    stops: stops
+                });
+            }
+        });
+    });
+
 }
