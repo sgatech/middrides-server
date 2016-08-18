@@ -78,5 +78,4 @@ function getWaiting() {
     });
 }
 
-// setInterval(getWaiting, 3e4);   // every 30 seconds
-setInterval(getWaiting, 5000);   // every 30 seconds
+setInterval(getWaiting, 3e4);   // every 30 seconds
