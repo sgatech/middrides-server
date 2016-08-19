@@ -68,6 +68,7 @@ function createUser(db, email, password, callback) {
  */
 function getUserFromBson(doc) {
     var user = {};
+    user['_id'] = doc._id;
     user['email'] = doc.email;
     user['verified'] = doc.verified;
     return user;
@@ -81,6 +82,7 @@ function getUserFromBsonWithPassword(doc) {
     user['email'] = doc.email;
     user['verified'] = doc.verified;
     user['password'] = doc.password;
+    user['_id'] = doc._id;
     return user;
 }
 

@@ -66,16 +66,16 @@ module.exports = function(app, db) {
                     console.log("User exists");
                     res.status(403).json({ error: "User already exists" });
                 } else {
-                    manager.createUser(db, email, password, function(err, user) {
+                    manager.createUser(db, email, password, function(err, createdUser) {
                         if (err) manager.handleError(err, res);
                         else {
-                            if (!user) {
+                            if (!createdUser) {
                                 res.status(500).json({ error: "Unknown error" });
                             } else {
-                                manager.sendVerificationEmail(user, null);
+                                manager.sendVerificationEmail(createdUser, null);
                                 res.status(200).json({
                                     error: "",
-                                    user: user
+                                    user: createdUser
                                 });
                             }
                         }
