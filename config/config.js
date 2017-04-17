@@ -1,4 +1,4 @@
-var path = require("path");
+let path = require("path");
 
 const rootPath = path.normalize(__dirname + '/..');
 const env = process.env.NODE_ENV || 'development';

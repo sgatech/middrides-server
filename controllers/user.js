@@ -221,7 +221,7 @@ module.exports = function(app, db) {
                         $set: { verified: true }
                     }, function(err, result) {
                         if (err) res.status(500).send("Failed to verify user");
-                        else res.status(200).send("Successfully verified " + user.email);
+                        else res.status(200).send(`Successfully verified ${user.email}`);
                     });
                 }
             }

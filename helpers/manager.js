@@ -67,7 +67,7 @@ function createUser(db, email, password, callback) {
  * Turns bson user into json
  */
 function getUserFromBson(doc) {
-    var user = {};
+    let user = {};
     user['_id'] = doc._id;
     user['email'] = doc.email;
     user['verified'] = doc.verified;
@@ -78,7 +78,7 @@ function getUserFromBson(doc) {
  * Turns bson user into json with password field
  */
 function getUserFromBsonWithPassword(doc) {
-    var user = {};
+    let user = {};
     user['email'] = doc.email;
     user['verified'] = doc.verified;
     user['password'] = doc.password;
@@ -109,23 +109,23 @@ function sendVanArrivingFCM(fcm, id, callback) {
  * Send verification email
  */
 function sendVerificationEmail(user, res) {
-    var email   = require("emailjs");
-    var server  = email.server.connect({
+    let email   = require("emailjs");
+    let server  = email.server.connect({
         user:    SECRETS.email.user,
         password:SECRETS.email.password,
         host:   "smtp-mail.outlook.com",
         tls:    true
     });
 
-    var url = SECRETS.email.url + "/verify?userId=" + user._id;
+    let url = `${SECRETS.email.url}/verify?userId=${user._id}`;
 
-    var message = {
+    let message = {
         from:    "No-reply<" + SECRETS.email.user + ">", 
         to:      user.email,
         subject: "MiddRides Email Verification",
         attachment: 
         [
-            { data: "MiddRides: <br><a href=\"" + url + "\">Please click to verify your email</a>", alternative:true }
+            { data: `MiddRides: <br><a href=\"${url}\">Please click to verify your email</a>`, alternative:true }
         ]
     };
 

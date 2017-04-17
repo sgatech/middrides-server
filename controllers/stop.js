@@ -76,7 +76,7 @@ module.exports = function(app, db) {
             return;
         }
 
-        var stops = [];
+        let stops = [];
         delete req.body['password'];
         for (let key in req.body) {
             stops.push({

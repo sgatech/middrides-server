@@ -1,19 +1,19 @@
-var bodyParser = require('body-parser');
-var logger = require('morgan');
-var glob = require('glob');
-var favicon = require('serve-favicon');
-var fs = require('fs');
-var MongoClient = require('mongodb').MongoClient;
+let bodyParser = require('body-parser');
+let logger = require('morgan');
+let glob = require('glob');
+let favicon = require('serve-favicon');
+let fs = require('fs');
+let MongoClient = require('mongodb').MongoClient;
 
 const CONSTANTS = require("../config/constants");
 
-var db, server;
+let db, server;
 
 module.exports = function (app, config) {
     app.use(logger('dev'));
 
     // connect to databse
-    var url = config.db;
+    let url = config.db;
     MongoClient.connect(url, function(err, database) {
         if (err) {
             console.log(err.message);

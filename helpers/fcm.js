@@ -9,7 +9,7 @@ module.exports = class FCM {
             method: "POST",
             json: true, // this automatically adds "Content-Type": "application/json" to header
             headers: {
-                "Authorization": "key=" + fcmConfig["api_key"]
+                "Authorization": `key=${fcmConfig["api_key"]}`
             }
         };
     }
@@ -27,13 +27,13 @@ module.exports = class FCM {
             data: data
         };
         
-        console.log("Sending FCM request with body: " + this.options.body.to);
+        console.log(`Sending FCM request with body:${this.options.body.to}`);
         request(this.options, function(error, response, body) {
             if (error) {
                 return callback(error);
             }
 
-            console.log("FCM request finished with response: " + body);
+            console.log(`FCM request finished with response: ${body}`);
             callback(null);
         });
     }
@@ -53,13 +53,13 @@ module.exports = class FCM {
             notification: notice
         }
 
-        console.log("Sending FCM request with body: " + this.options.headers.Authorization);
+        console.log(`Sending FCM request with body: ${this.options.headers.Authorization}`);
         request(this.options, function(error, response, body) {
             if (error) {
                 return callback(error);
             }
 
-            console.log("FCM request finished with response: " + body);
+            console.log(`FCM request finished with response: ${body}`);
             callback(null);
         })
     }
