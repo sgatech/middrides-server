@@ -21,20 +21,6 @@ module.exports = function(app, db) {
             name: "status"
         }, function(err, doc) {
             if (err) { manager.handleError(err, res); }
-            // else if (!doc) {
-            //     db.collection(CONSTANTS.COLLECTION.STATUS).insertOne({
-            //         name: "status",
-            //         running: true
-            //     }, function(err, result) {
-            //         if (err) { manager.handleError(err, res); return; }
-            //         else {
-            //             res.status(200).json({
-            //                 error: "",
-            //                 status: true
-            //             });
-            //         }
-            //     });
-            // } 
             else {
                 res.status(200).json({
                     error: "",
