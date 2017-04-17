@@ -5,6 +5,8 @@ var favicon = require('serve-favicon');
 var fs = require('fs');
 var MongoClient = require('mongodb').MongoClient;
 
+const CONSTANTS = require("../config/constants");
+
 var db, server;
 
 module.exports = function (app, config) {
