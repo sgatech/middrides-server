@@ -9,4 +9,4 @@ if [ ! -d $DBPATH ]; then
   mkdir data
 fi
 
-mongod --dbpath $DBPATH
+mongod --dbpath $DBPATH --smallfiles
