@@ -18,6 +18,28 @@ module.exports = function (app, config) {
             return;
         } else {
             db = database;
+
+            // insert status collection
+            db.collection(CONSTANTS.COLLECTION.STATUS).findOne({
+                name: "status"
+            }, function(err, doc) {
+                if (err) {
+                    console.log(err);
+                } else if (!doc) {
+                    db.collection(CONSTANTS.COLLECTION.STATUS).insertOne({
+                        name: "status",
+                        running: true
+                    }, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            db.close();
+                            server.close();
+                            process.exit(0);
+                        }
+                    });
+                }
+            });
+
             const controllers = glob.sync(config.root + '/controllers/*.js');
             controllers.forEach(controller => {
                 require(controller)(app, db);
