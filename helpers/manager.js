@@ -111,10 +111,10 @@ function sendVanArrivingFCM(fcm, id, callback) {
 function sendVerificationEmail(user, res) {
     var email   = require("emailjs");
     var server  = email.server.connect({
-        user:    SECRETS.email.user, 
-        password:SECRETS.email.password, 
-        host:    "ssmtp.middlebury.edu",
-        tls:     true
+        user:    SECRETS.email.user,
+        password:SECRETS.email.password,
+        host:   "smtp-mail.outlook.com",
+        tls:    true
     });
 
     var url = SECRETS.email.url + "/verify?userId=" + user._id;
