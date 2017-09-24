@@ -20,15 +20,15 @@
   },
   "homepage": "https://github.com/Midd-Rides/MiddRides-Server#readme",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "emailjs": "^1.0.5",
-    "express": "^4.14.0",
-    "glob": "^7.0.5",
-    "mongodb": "^2.2.5",
-    "morgan": "^1.7.0",
+    "body-parser": "^1.18.2",
+    "emailjs": "^1.0.12",
+    "express": "^4.15.4",
+    "glob": "^7.1.2",
+    "mongodb": "^2.2.31",
+    "morgan": "^1.8.2",
     "path": "^0.12.7",
-    "pug": "^2.0.0-beta5",
-    "request": "^2.74.0",
-    "serve-favicon": "^2.3.0"
+    "pug": "^2.0.0-rc.4",
+    "request": "^2.82.0",
+    "serve-favicon": "^2.4.4"
   }
 }
