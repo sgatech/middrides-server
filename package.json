@@ -22,13 +22,13 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "emailjs": "^1.0.12",
-    "express": "^4.15.4",
+    "express": "^4.16.2",
     "glob": "^7.1.2",
-    "mongodb": "^2.2.31",
-    "morgan": "^1.8.2",
+    "mongodb": "^2.2.33",
+    "morgan": "^1.9.0",
     "path": "^0.12.7",
     "pug": "^2.0.0-rc.4",
-    "request": "^2.82.0",
-    "serve-favicon": "^2.4.4"
+    "request": "^2.83.0",
+    "serve-favicon": "^2.4.5"
   }
 }
