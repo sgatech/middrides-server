@@ -22,7 +22,7 @@ MiddRides server for dispatchers
 <br/>
 
 ## Install
-    git clone https://github.com/Midd-Rides/MiddRides-Server.git
+    git clone https://github.com/sgatech19-20/middrides-server
 
 Go to root directory, install dependencies by
     
